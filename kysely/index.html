@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hyvinvointikysely</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Omat css määritykset tähän, eli omat css määritykset bootstrapin jälkeen! -->
+
+</head>
+
+<body>
+    <!-- Container alkaa -->
+    <div class="container">
+    <!-- Lomake alkaa -->
+    <form>
+    <div id="lomake"></div>
+    <button>Lähetä</button>
+    </form>
+    <!-- Lomake loppuu -->    
+       
+    </div>
+   <!-- Container loppuu -->     
+
+    <!-- Ensin linkki jqueryn pääkirjastoon -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Bootstrapin js tiedosto -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>  
+      $.getJSON("https://sheltered-sands-56766.herokuapp.com/api/kysymykset", function(data){
+    var items=[];
+    var i=0;
+    
+    $.each(data, function(key,d){
+    
+           items.push(d.kysymysTeksti+": <br>");
+           items.push("<input type=" + d.type + " id= "+ d.name+"><br>");
+   
+    });
+    $("<div/>", {
+        html:items.join("")
+    }).appendTo("#lomake");
+    });
+</script>
+</body>
+
