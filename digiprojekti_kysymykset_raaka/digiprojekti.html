@@ -1,0 +1,121 @@
+<DOCTYPE HTML!>
+    <html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Hyvinvointikysely</title>
+    </head>
+
+    <body>
+        <h2>Hyvinvointikysely</h2>
+        <br>
+        <h3>Hei!<br>Tervetuloa Digilisaation opiskelijatoiminnan edistämiskyselyyn! Ensiksi kysyisimme hieman perustietoja.</h3>
+        <form action="/action_page.php"> Sukupuolesi?
+            <br>
+            <input type="radio" name="gender" value="male">Mies
+            <input type="radio" name="gender" value="female">Nainen
+            <input type="radio" name="gender" value="other">Muu
+            <input type="radio" name="gender" value="none">En halua vastata
+            <br>
+            <br> Ikäsi?
+            <br>
+            <input type="radio" name="age" value="ika1">18-20
+            <input type="radio" name="age" value="ika2">21-25
+            <input type="radio" name="age" value="ika3">26-30
+            <input type="radio" name="age" value="ika4">30+
+            <br>
+            <br> Millä kampuksella opiskelet?
+            <br>
+            <input type="radio" name="campus" value="pasila">Pasila
+            <input type="radio" name="campus" value="haaga">Haaga
+            <input type="radio" name="campus" value="malmi">Malmi
+            <input type="radio" name="campus" value="vierumaki">Vierumäki
+            <input type="radio" name="campus" value="porvoo">Porvoo
+            <br>
+            <br>Monennettako vuotta opiskelet?
+            <br>
+            <input type="radio" name="year" value="first">Ensimmäistä
+            <input type="radio" name="year" value="second">Toista
+            <input type="radio" name="year" value="third">Kolmatta
+            <input type="radio" name="year" value="fourth">Neljättä
+            <input type="radio" name="year" value="multi">4+
+            <br>
+            <br>
+            <h3>Sitten siirrymme syventävämpiin kysymyksiin!</h3>
+            <br>Oletko koskaan osallistunut opiskelijajärjestön tapahtumiin?
+            <br>
+            <input type="radio" name="q1" value="kylla1">Kyllä
+            <input type="radio" name="q1" value="ei1">En
+            <br>
+            <br>Oletko ollut tyytyväinen opiskelijajärjestön tarjoamien palveluiden sisältöön?
+            <br>
+            <input type="radio" name="q2" value="kylla2">Kyllä
+            <input type="radio" name="q2" value="ei2">En
+            <input type="radio" name="q2" value="idk2">Ei mielipidettä
+            <br>
+            <br>Millaisiin opiskelijajärjestön tapahtumiin olet osallistunut?
+            <br>
+            <input type="checkbox" name="q3" value="party">Bileisiin
+            <input type="checkbox" name="q3" value="game">Peli-iltoihin
+            <input type="checkbox" name="q3" value="sport">Kisakatsomoihin
+            <input type="checkbox" name="q3" value="cinema">Elokuvailtoihin
+            <input type="checkbox" name="q3" value="event">Muu tapahtuma
+            <br>
+            <br>Minkälaisia tapahtumia haluaisit, että opiskelijajärjestö järjestää?
+            <br>
+            <input type="checkbox" name="q4" value="party2">ENEMMÄN BILEITÄ!
+            <input type="checkbox" name="q4" value="game2">Peli-iltoja
+            <input type="checkbox" name="q4" value="test2">Lukupiirejä(tentti)
+            <input type="checkbox" name="q4" value="code2">Koodauskerhoja
+            <input type="checkbox" name="q4" value="story2">Lukupiirejä(kirjakerho)
+            <input type="checkbox" name="q4" value="club2">Kerhotoimintaa
+            <br>
+            <br>KOMMENTTI: TÄHÄN TEKSTIKENTTÄKYSYMYS JOHON VASTAAJA VOI ESITTÄÄ OMIA IDEOITAAN!!!
+            <br>
+            <input type="textarea" name="q5" value="Omat ideat">
+            <br>
+            <br>Minkälaisen arvosanan antaisit nykyisestä opiskelijajärjestön toiminnasta?
+            <br>
+            <input type="radio" name="q6" value="1">1
+            <input type="radio" name="q6" value="2">2
+            <input type="radio" name="q6" value="3">3
+            <input type="radio" name="q6" value="4">4
+            <input type="radio" name="q6" value="5">5
+            <br>
+            <br>Asteikolla 1-5, kuinka valmis olisit itse mukana järjestämässä haluamaasi harrastustoimintaa? 1 = Ei ollenkaan, 5 = 100% Mukana
+            <br>
+            <input type="radio" name="q7" value="11">1
+            <input type="radio" name="q7" value="22">2
+            <input type="radio" name="q7" value="33">3
+            <input type="radio" name="q7" value="44">4
+            <input type="radio" name="q7" value="55">5
+            <br>
+            <br>Muita ideoita opiskelijajärjestön kehittämiseksi?
+            <br>
+            <textarea name="textarea1"></textarea>
+            <br>
+            <br>Mitä mieltä olet opiskelijajärjestön kellaritiloista? MUOTOILE KYSYMYKSET PAREMMIN
+            <br>
+            <textarea name="textarea2"></textarea>
+            <br>
+            <br>Miten kehittäisit näitä tiloja? MUOTOILE KYSYMYKSET PAREMMIN
+            <br>
+            <textarea name="textarea3"></textarea>
+            <br>
+            <br>Osallistuisitko sinua kiinnostavaan opiskelijajärjestön järjestämään harrastustoimintaan?
+            <br>
+            <input type="radio" name="q8" value="kylla3">Kyllä
+            <input type="radio" name="q8" value="ei3">En
+            <input type="radio" name="q8" value="maybe3">Ehkä
+            <input type="radio" name="q8" value="idk3">Ei mielipidettä
+            <br>
+            <br>
+            <br>
+            <input type="submit" value="Lähetä"> </form>
+            <br>
+            <br>
+            <br>
+    </body>
+
+    </html>
