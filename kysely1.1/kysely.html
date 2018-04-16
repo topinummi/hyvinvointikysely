@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Oppimistehtävä 3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Oppimistehtävä 3 <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a href="etusivu.html">Etusivu</a></li>
+            <li><a href="galleria.html">Galleria</a></li>
+            <li><a href="kartta.html">Kartta</a></li>
+            <li><a href="vapaa.html">Vapaavalintainen</a></li>
+            <li class="divider"></li>
+            <li><a href="kysely.html">Kysely</a></li>
+        </ul>
+    </div>
+    <form>
+        <div id="lomake"> </div>
+        <button>Lähetä</button>
+    </form>
+    <script>
+        $.getJSON("kysely.json", function (data) {
+            var lomakekentta = [];
+            var items = [];
+            var otsikko = data.kysely;
+            items.push("<h2>" + otsikko + "</h2>");
+            var kysymykset = data.kysymykset;
+            $.each(data, function (key, d) {
+                // Luetaan JSON-tiedosto ja muodostetaan hmtl-lomake -etiketit items taulukkoon
+                // luetaan kysymys
+                if (d.tyyppi == "text") {
+                    items.push(d.kysymys + "<br>");
+                    // tehdään lomake-elementti
+                    items.push("<input type=" + d.tyyppi + "id=" + d.id + "><br>");
+                }
+                if (d.tyyppi == "textarea") {
+                    items.push(d.kysymys + "<br>");
+                    // tehdään lomake-elementti
+                    items.push("<textarea id=" + d.id + "></textarea><br>");
+                }
+                if (d.tyyppi == "radio" || d.tyyppi == "checkbox") {
+                    items.push(d.kysymys + "<br>");
+                    // tehdään lomake-elementti
+                    for (i = 0; i < d.value.length; i++) {
+                        items.push("<input type=" + d.tyyppi + " id=" + d.id + " name=" + d.id + " value=" + d.value[i] + ">" + d.value[i] + "<br>");
+                    }
+                }
+            });
+            // items-taulukon sisältö sivulle näkyvin
+            $("<div/>", {
+                html: items.join("")
+            }).appendTo("#lomake");
+        });
+    </script>
+</body>
+
+</html>
