@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Oppimistehtävä 3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <form>
+        <div id="lomake"> </div>
+        <button onclick="laheta()">Lähetä</button>
+    </form>
+    <script>
+        var lomakekentta = [];
+        $.getJSON("http://www.mocky.io/v2/5ad48b6b2e00005200583b8b", function (data) {
+            var items = [];
+            var otsikko = data.kysely;
+            items.push("<h2>" + otsikko + "</h2>");
+            var kysymykset = data.kysymykset;
+            $.each(kysymykset, function (key, d) {
+                // Luetaan JSON-tiedosto ja muodostetaan html-lomake -etiketit items taulukkoon
+                // luetaan kysymys
+                lomakekentta.push(d.id);
+                if (d.tyyppi == "text") {
+                    items.push(d.kysymys + "<br>");
+                    // tehdään lomake-elementti
+                    items.push("<input type=" + d.tyyppi + "id=" + d.id + "><br>");
+                    
+                }
+                if (d.tyyppi == "textarea") {
+                    items.push(d.kysymys + "<br>");
+                    // tehdään lomake-elementti
+                    items.push("<textarea id=" + d.id + "></textarea><br>");
+                    
+                }
+                if (d.tyyppi == "radio" || d.tyyppi == "checkbox") {
+                    items.push(d.kysymys + "<br>");
+                    // tehdään lomake-elementti
+                    for (i = 0; i < d.value.length; i++) {
+                        items.push("<input type=" + d.tyyppi + " id=" + d.id + " name=" + d.id + " value=" + d.value[i] + ">" + d.value[i] + "<br>");
+                        
+                    }
+                }
+            });
+            // items-taulukon sisältö sivulle näkyviin
+            $("<div/>", {
+                html: items.join("")
+            }).appendTo("#lomake");
+        });
+
+        function laheta() {
+            //lisää tähän lomakenttien value-arvojen hakeminen
+            var vastaus;
+            var lahetys = [];
+            for (i = 0; i < lomakekentta.length; i++) {
+                tyyppi = document.getElementById(lomakekentta[i]).type;
+                if (tyyppi == "text") {
+                    vastaus = document.getElementById(lomakekentta[i]).value;
+                }
+                if (tyyppi == "textarea") {
+                    vastaus = document.getElementById(lomakekentta[i]).value;
+                }
+                if (tyyppi == "radio") {
+                    var radios = document.getElementsByName(lomakekentta[i]);
+                    var length = radios.length;
+                    for (x = 0; x < length; x++) {
+                        if (radios[x].checked) {
+                            vastaus = radios[x].value;
+                            break;
+                        }
+                    }
+                }
+                if (tyyppi == "checkbox") {
+                    var checkboxes = document.getElementsByName(lomakekentta[i]);
+                    var length = checkboxes.length;
+                    for (x = 0; x < length; x++) {
+                        if (checkboxes[x].checked) {
+                            vastaus = checkboxes[x].value;
+                            break;
+                        }
+                    }
+                }
+                // lisää tähän tietojen hakeminen lomakekentistä
+                //muuta id-tunnukset ja value-arvot JSON-muotoon
+                lahetys.push("{\"id\":\"" + lomakekentta[i] + "\",n\"vastaus\":\"" + vastaus + "\"}");
+                vastaus = "";
+            }
+            //tulosta alert-ikkunassa ja lähetä JSON-muotoinen data 
+            jsonData = "[" + lahetys.join(",\n") + "]";
+            alert(jsonData);
+        }
+    </script>
+</body>
+
+</html>
