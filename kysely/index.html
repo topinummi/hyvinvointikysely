@@ -10,15 +10,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="stylesheet.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-</head>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"> </head>
 
 <body>
-<div class="container">
-   <form>
-        <div id="lomake"> </div>
-        <button onclick="laheta()">Lähetä</button>
-    </form>
+    <div class="container">
+        <form>
+            <div id="lomake"> </div>
+            <button onclick="laheta()">Lähetä</button>
+        </form>
     </div>
     <script>
         var lomakekentta = [];
@@ -28,35 +27,34 @@
             items.push("<h2>" + otsikko + "</h2>");
             var kysymykset = data.kysymykset;
             $.each(kysymykset, function (key, d) {
-                    // Luetaan JSON-tiedosto ja muodostetaan html-lomake -etiketit items taulukkoon
+                // Luetaan JSON-tiedosto ja muodostetaan html-lomake -etiketit items taulukkoon
                 // luetaan kysymys
                 lomakekentta.push(d.id);
-               if (d.tyyppi == "text") {
+                if (d.tyyppi == "text") {
                     items.push(d.kysymys + "<br>");
-                   // tehdään lomake-elementti
-                    items.push("<input type=" + d.tyyppi + "id=" + d.id + "><br>"); 
+                    // tehdään lomake-elementti
+                    items.push("<input type=" + d.tyyppi + "id=" + d.id + "><br>");
                 }
                 if (d.tyyppi == "textarea") {
                     items.push("<h4>" + d.kysymys + "</h4>");
                     // tehdään lomake-elementti
                     items.push("<p><textarea id=" + d.id + "></textarea></p>");
-                } 
-             if (d.tyyppi == "radio" || d.tyyppi == "checkbox") {
+                }
+                if (d.tyyppi == "radio" || d.tyyppi == "checkbox") {
                     items.push("<h4>" + d.kysymys + "</h4>");
-                 // tehdään lomake-elementti
+                    // tehdään lomake-elementti
                     for (i = 0; i < d.value.length; i++) {
-                        items.push("<p><input type= " + d.tyyppi + " id=" + d.id + " name=" + d.id + " value= " + d.value[i] + "> " + d.value[i] + "</p>" );
+                        items.push("<p><input type= " + d.tyyppi + " id=" + d.id + " name=" + d.id + " value= " + d.value[i] + "> " + d.value[i] + "</p>");
                     }
                 }
             });
-            
             // items-taulukon sisältö sivulle näkyvin
             $("<div/>", {
-            html: items.join("")
+                html: items.join("")
             }).appendTo("#lomake");
         });
-        
-         function laheta() {
+         
+        function laheta() {
             //lisää tähän lomakenttien value-arvojen hakeminen
             var vastaus;
             var lahetys = [];
@@ -64,9 +62,17 @@
                 tyyppi = document.getElementById(lomakekentta[i]).type;
                 if (tyyppi == "text") {
                     vastaus = document.getElementById(lomakekentta[i]).value;
+                    // lisää tähän tietojen hakeminen lomakekentistä
+                //muuta id-tunnukset ja value-arvot JSON-muotoon
+                lahetys.push("{\"kysymysid\":" + lomakekentta[i] + ",\"vastaus\":\"" + vastaus + "\"}");
+                vastaus = "";
                 }
                 if (tyyppi == "textarea") {
                     vastaus = document.getElementById(lomakekentta[i]).value;
+                    // lisää tähän tietojen hakeminen lomakekentistä
+                //muuta id-tunnukset ja value-arvot JSON-muotoon
+                lahetys.push("{\"kysymysid\":" + lomakekentta[i] + ",\"vastaus\":\"" + vastaus + "\"}");
+                vastaus = "";
                 }
                 if (tyyppi == "radio") {
                     var radios = document.getElementsByName(lomakekentta[i]);
@@ -74,6 +80,10 @@
                     for (x = 0; x < length; x++) {
                         if (radios[x].checked) {
                             vastaus = radios[x].value;
+                            // lisää tähän tietojen hakeminen lomakekentistä
+                //muuta id-tunnukset ja value-arvot JSON-muotoon
+                lahetys.push("{\"kysymysid\":" + lomakekentta[i] + ",\"vastaus\":\"" + vastaus + "\"}");
+                vastaus = "";
                             break;
                         }
                     }
@@ -84,19 +94,31 @@
                     for (x = 0; x < length; x++) {
                         if (checkboxes[x].checked) {
                             vastaus = checkboxes[x].value;
-                            break;
+                            // lisää tähän tietojen hakeminen lomakekentistä
+                //muuta id-tunnukset ja value-arvot JSON-muotoon
+                            lahetys.push("{\"kysymysid\":" + lomakekentta[i] + ",\"vastaus\":\"" + vastaus + "\"}");
+                vastaus = "";
                         }
                     }
                 }
-                // lisää tähän tietojen hakeminen lomakekentistä
-                //muuta id-tunnukset ja value-arvot JSON-muotoon
-                lahetys.push("{\"id\":\"" + lomakekentta[i] + "\",n\"vastaus\":\"" + vastaus + "\"}");
-                vastaus = "";
+                
             }
             //tulosta alert-ikkunassa ja lähetä JSON-muotoinen data 
-            jsonData = "[" + lahetys.join(",\n") + "]";
+            jsonData = "{\"kyselyId\":1,\"vastaukset\":[" + lahetys.join(",\n") + "]}";
             alert(jsonData);
         }
+// post, miten tieto lähtee ohtutiimin palvelimelle (muuta urliin palvelimen osoite)       
+// stringify-metodia tarvitaan vain alert-funktiota varten. 
+// var myJSON = JSON.stringify(jsonData);
+
+// $.ajax({
+// url: 'https://www.mocky.io/v2/omakoodi',
+// type: 'POST',
+// dataType: 'json',
+// data: jsonData, 
+// success: function() { alert('POST completed. Data:' + myJSON)}
+// }); 
+
     </script>
 </body>
 
