@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hyvinvointikysely</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="stylesheet.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Didact+Gothic|Muli|Quattrocento" rel="stylesheet"> </head>
+
+<body>
+    <div class="container">
+        <form>
+            <div id="lomake"> </div>
+            <button onclick="laheta()">Lähetä</button>
+        </form><br>
+        <button onclick="location.href='analytics.html';">Siirry tuloksiin</button> 
+    </div>
+    <script>
+        var lomakekentta = [];
+        $.getJSON("http://www.mocky.io/v2/5aeaf0373000000f00575304", function (data) {
+            // https://sheltered-sands-56766.herokuapp.com/api/kysely/8 
+            var items = [];
+            var otsikko = data.kyselyNimi;
+            items.push("<h2>" + otsikko + "</h2>");
+            var kysymykset = data.kysymysList;
+            $.each(kysymykset, function (key, d) {
+                // Luetaan JSON-tiedosto ja muodostetaan html-lomake -etiketit items taulukkoon
+                // luetaan kysymys
+                lomakekentta.push(d.kysymysId);
+                if (d.tyyppi == "text") {
+                    items.push(d.kysymysTeksti + "<br>");
+                    // tehdään lomake-elementti
+                    items.push("<input type=" + d.tyyppi + "id=" + d.kysymysId + "><br>");
+                }
+                if (d.tyyppi == "textarea") {
+                    items.push("<h4>" + d.kysymysTeksti + "</h4>");
+                    // tehdään lomake-elementti
+                    items.push("<p><textarea id=" + d.kysymysId + "></textarea></p>");
+                }
+                if (d.tyyppi == "radio" || d.tyyppi == "checkbox") {
+                    items.push("<h4>" + d.kysymysTeksti + "</h4>");
+                    // tehdään lomake-elementti
+                    for (i = 0; i < d.arvot.length; i++) {
+                        items.push("<p><input type= " + d.tyyppi + " id=" + d.kysymysId + " name=" + d.kysymysId + " value= " + d.arvot[i] + "> " + d.arvot[i] + "</p>");
+                    }
+                }
+            });
+            // items-taulukon sisältö sivulle näkyviin
+            $("<div/>", {
+                html: items.join("")
+            }).appendTo("#lomake");
+        });
+         
+        function laheta() {
+            //lisää tähän lomakenttien value-arvojen hakeminen
+            var vastaus;
+            var lahetys = [];
+            for (i = 0; i < lomakekentta.length; i++) {
+                tyyppi = document.getElementById(lomakekentta[i]).type;
+                if (tyyppi == "text") {
+                    vastaus = document.getElementById(lomakekentta[i]).value;
+                    // lisää tähän tietojen hakeminen lomakekentistä
+                //muuta id-tunnukset ja value-arvot JSON-muotoon
+                lahetys.push("{\"kysymysId\":" + lomakekentta[i] + ",\"vastaus\":\"" + vastaus + "\"}");
+                vastaus = "";
+                }
+                if (tyyppi == "textarea") {
+                    vastaus = document.getElementById(lomakekentta[i]).value;
+                    // lisää tähän tietojen hakeminen lomakekentistä
+                //muuta id-tunnukset ja value-arvot JSON-muotoon
+                lahetys.push("{\"kysymysId\":" + lomakekentta[i] + ",\"vastaus\":\"" + vastaus + "\"}");
+                vastaus = "";
+                }
+                if (tyyppi == "radio") {
+                    var radios = document.getElementsByName(lomakekentta[i]);
+                    var length = radios.length;
+                    for (x = 0; x < length; x++) {
+                        if (radios[x].checked) {
+                            vastaus = radios[x].value;
+                            // lisää tähän tietojen hakeminen lomakekentistä
+                //muuta id-tunnukset ja value-arvot JSON-muotoon
+                lahetys.push("{\"kysymysId\":" + lomakekentta[i] + ",\"vastaus\":\"" + vastaus + "\"}");
+                vastaus = "";
+                            break;
+                        }
+                    }
+                }
+                if (tyyppi == "checkbox") {
+                    var checkboxes = document.getElementsByName(lomakekentta[i]);
+                    var length = checkboxes.length;
+                    for (x = 0; x < length; x++) {
+                        if (checkboxes[x].checked) {
+                            if (vastaus == ""){
+                                 vastaus = "'"+checkboxes[x].value+"'";
+                            } else{
+                            vastaus = vastaus+",'"+checkboxes[x].value+"'";}
+                            // lisää tähän tietojen hakeminen lomakekentistä
+                //muuta id-tunnukset ja value-arvot JSON-muotoon
+                            
+                        }
+                    
+                    }
+                    lahetys.push("{\"kysymysId\":" + lomakekentta[i] + ",\"vastaus\":\[" + vastaus + "]\}");
+                vastaus = "";
+                }
+                
+            }
+            //tulosta alert-ikkunassa ja lähetä JSON-muotoinen data 
+            jsonData = "{\"kyselyId\":1,\"vastaukset\":[" + lahetys.join(",\n") + "]}";
+            alert(jsonData);
+        }
+        
+        // http://sheltered-sands-56766.herokuapp.com/ ohtutiimin linkki
+// post, miten tieto lähtee ohtutiimin palvelimelle (muuta urliin palvelimen osoite)       
+// stringify-metodia tarvitaan vain alert-funktiota varten. 
+// var myJSON = JSON.stringify(jsonData);
+
+// $.ajax({
+// url: 'https://www.mocky.io/v2/omakoodi',
+// type: 'POST',
+// dataType: 'json',
+// data: jsonData, 
+// success: function() { alert('POST completed. Data:' + myJSON)}
+// }); 
+
+    </script>
+</body>
+
+</html>

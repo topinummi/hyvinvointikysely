@@ -1,0 +1,78 @@
+body {
+    background-image: url(koulu_3.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: scroll;
+    
+}
+
+h2 {
+    color: #006080;
+    font-size: 38px;
+    font-family: 'Muli', sans-serif;
+    text-align: center;
+    padding-bottom: 60px;
+    padding-top: 30px;
+}
+
+h4 {
+    color: #006080;
+    font-size: 22px;
+    font-family: 'Didact Gothic', sans-serif;
+}
+
+p {
+    font-size: 14px;
+  display: inline-block;
+    padding: 10px;
+    font-family: 'Muli', sans-serif;
+    
+}
+   
+.container {
+    width: 80%;
+    /*leveys skaalaantuu prosenteissa */
+    max-width: 1200px;
+    /*maksimileveys */
+    margin: auto;
+    /*keskitys*/
+    margin-top: 200px;
+    margin-bottom: 10%;
+    padding: 30px;
+    /*tilaa sisällön ja reunuksen väliin*/
+    background-color: rgba(217, 233, 249, 0.9);
+    box-shadow: 5px 5px 10px #2b394f;
+    
+}
+
+
+form {
+    line-height: 1.5;
+    padding-left: 40px;
+    padding-right: 40px;
+    
+}
+
+
+button {
+    background-color: #006080;
+    color: whitesmoke;
+    border-color: #006080;
+    border-radius: 12px;
+    padding: 8px;
+    font-family: 'Muli', sans-serif;
+    font-size: 15px;
+}
+
+@media (max-width:600px) {
+    .container {
+        width: 95%;
+        margin: 0px auto;
+        padding: 3px 3px 3px 3px;
+    }
+    h2 {
+        font-size: 28px;
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+}

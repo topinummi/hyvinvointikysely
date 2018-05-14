@@ -1,0 +1,56 @@
+body {
+    background-image: url(Pasila_ulkoa.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+h2 {
+    color: darkcyan;
+    font-size: 28px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+h4 {
+    color: darkslateblue;
+    font-size: 22px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+p {
+    font-size: 14px;
+  display: inline-block;
+    padding: 10px;
+    font-family: 'Montserrat', sans-serif;
+    
+}
+
+.container {
+    width: 90%;
+    /*leveys skaalaantuu prosenteissa */
+    max-width: 1200px;
+    /*maksimileveys */
+    margin: auto;
+    /*keskitys*/
+    margin-top: 150px;
+    margin-bottom: 10%;
+    padding: 10px;
+    /*tilaa sisällön ja reunuksen väliin*/
+    background-color: rgba(217, 233, 249, 0.9);
+    box-shadow: 5px 5px 10px #2b394f;
+    
+}
+
+
+form {
+    line-height: 1.5;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+button {
+    background-color: darkslateblue;
+    color: whitesmoke;
+    border-color: darkslateblue;
+    border-radius: 10px;
+}

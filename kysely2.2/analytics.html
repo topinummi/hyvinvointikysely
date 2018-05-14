@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hyvinvointikysely</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    
+    // Load the Visualization API and the piechart package.
+    google.charts.load('current', {'packages':['corechart']});
+      
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+      
+    function drawChart() {
+      var jsonData = $.ajax({
+          url: "http://www.mocky.io/v2/5ae1bc652d000028009d7e1b",
+          dataType: "json",
+          async: false
+          }).responseText;
+      // Create our data table out of JSON data loaded from server.
+      var data = new google.visualization.DataTable(jsonData);
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.PieChart(document.getElementById('piirakka_div'));
+        chart.draw(data, {width: 800, height: 480, backgroundColor: 'transparent'});
+    }
+
+    </script>
+    <script type="text/javascript">
+    
+    // Load the Visualization API and the piechart package.
+    google.charts.load('current', {'packages':['corechart']});
+      
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+      
+    function drawChart() { 
+      var jsonData = $.ajax({
+          url: "http://www.mocky.io/v2/5af96ac63200005f2c86b180",
+          dataType: "json",
+          async: false
+          }).responseText;
+ 
+      // Create our data table out of JSON data loaded from server.
+      var data = new google.visualization.DataTable(jsonData);
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.BarChart(document.getElementById('pylvas_div'));
+        chart.draw(data, {width: 800, height: 480, backgroundColor: 'transparent'});
+    }
+
+    </script>
+    
+    <link href="stylesheet.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"> </head>
+
+<body>
+    <div class="container">
+    <h2>Haaga-Helian hyvinvointikysely</h2>
+    <h4>Kyselyn vastaukset</h4><br>
+        <!--Div that will hold the pie chart-->
+        <h4>Millaisiin opiskelijajärjestöjen tapahtumiin olet osallistunut?</h4>
+        <div id="piirakka_div"></div><br>
+        <h4>Oletko ollut tyytyväinen opiskelijajärjestöjen tapahtumiin?</h4>
+        <div id="pylvas_div"></div>
+    
+        <button onclick="location.href='index.html';">Siirry etusivulle</button>
+    </div>
+</body>
+
+</html>
